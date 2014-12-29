@@ -1,0 +1,62 @@
+/*********目录结构说明*********/
+
+根目录
+  |——Log            日志目录
+  |——Core 			    程序目录
+    |——Extention	  扩展插件
+    |——Lib			    核心类库
+    |——Conf         全局配置
+    |——Common       公共函数
+  |——Concise        项目目录
+    |——Apis			    接口目录
+    |——Contrl       PHP文件目录
+    |——Cache		    缓存目录
+    |——Templet	    模板
+    |——Templet_c    模板编译目录
+    |——Public       公共文件目录
+      |——css        公共CSS
+      |——images     公共Images
+      |——js         公共JS
+      |——plugins    公共插件
+    |——Upload       上传目录
+      |——files      文件上传目录
+      |——images     图片上传目录
+
+
+/*********开发和命名*********/
+
+开发在项目目录Concise目录下，按功能模块设置PHP文件放置目录。
+每个PHP文件最前面要定义物理路径（必须），引入core.php（必须）
+代码如下：
+define("RUNTIME_PATH",substr(realpath(dirname(__FILE__)),0,-13));
+include RUNTIME_PATH."Core/core.php";
+
+/******** 关于Core ********/
+Core是程序目录，核心类放置于Core/Lib目录，命名规范是XXX.class.php。
+常用类放置于Core/Common目录，命名规范是XXX.class.php
+核心类在每个模块都会首先加载，常用类按需自行引入加载
+
+/******** 关于Smarty ********/
+模板中的Smarty变量请不要用纯数字，不要用数字开始。
+
+/******** 项目配置 *********/
+项目基础常量及Smarty配置，配置文件默认存放于Core/Conf文件下，如Core/Conf/config,配置文件没有后缀，每个开发人员根据自己本地情况，将配置当到本地后修改相应配置，并添加.php后缀。
+数据库的配置文件，在conf/db文件中，以常量形式存在，配置文件没有后缀，每个开发人员根据自己本地情况，将配置当到本地后修改相应配置，并添加.php后缀。
+
+/******** 日志记录 ********/
+日志记录包括：数据库连接错误记录，数据操作记录（仅记录insert，update，delete），操作异常记录
+日志类自动加载，无需include，可直接实例化。日志记录使用write方法
+write( $message, $type, $destination='', $extra='', $et)
+write方法有四个参数，第一个是需要记录的信息，第二个是日志记录的方式（我们选择3记录到文件中），第三个第四个参数空，第四个是日志类型
+1是代码异常，2是数据操作异常，3是数据库连接异常
+demo；
+$log = new Logs;
+$msg = '异常记录';
+$log->write($msg, 3, '', '', 1);
+
+
+/*********写在最后*********/
+发现问题，及时提出，及时修正，共同学习，共同进步！
+精诚所至，金石为开！
+
+          ————2014年11月25日 By Liuzm
