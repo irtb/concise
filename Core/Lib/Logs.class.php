@@ -22,17 +22,17 @@ class Logs{
     	if(self::FILE == $type) { 
     		if(empty($destination)) {
                 if ($et == 1) {
-                    $destination = PATH_LOG . 'error_'.date('Y_m_d') . EXT_LOG;
+                    $destination = LOG_PATH . '/error_'.date('Y_m_d') . LOG_EXT;
                 }elseif ($et == 2) {
-                    $destination = PATH_LOG . 'connect_'.date('Y_m_d') . EXT_LOG;
+                    $destination = LOG_PATH . '/connect_'.date('Y_m_d') . LOG_EXT;
                 }elseif ($et == 3) {
-                    $destination = PATH_LOG . 'action_'.date('Y_m_d') . EXT_LOG;
+                    $destination = LOG_PATH . '/action_'.date('Y_m_d') . LOG_EXT;
                 }else{
-                    $destination = PATH_LOG . 'other_'.date('Y_m_d') . EXT_LOG;
+                    $destination = LOG_PATH . '/other_'.date('Y_m_d') . LOG_EXT;
                 }
                 //检测日志文件大小，超过配置大小则备份日志文件重新生成
     			if(is_file( $destination ) && floor( LOG_FILE_SIZE ) <= filesize($destination) ) {
-        			rename($destination,dirname($destination).'/'.basename($destination, EXT_LOG). '-' .time(). EXT_LOG);
+        			rename($destination,dirname($destination).'/'.basename($destination, LOG_EXT). '-' .time(). LOG_EXT);
                 }
     		}
    			error_log("{$now} ".$_SERVER['REMOTE_ADDR']." | ".$_SERVER['REQUEST_URI']." | {$message}\r\n", $type, $destination, $extra);

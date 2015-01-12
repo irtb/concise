@@ -1,3 +1,4 @@
 <?php 
 include("./Core/core.php");
-dump($smarty);
+
+dump(getTokey());exit;
