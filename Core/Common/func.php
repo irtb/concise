@@ -18,3 +18,75 @@ function getTokey() {
 	$res = $db->getAll($sql, $data);
 	return $res;
 }
+
+// 添加加密Tokey
+function addTokey($num) {
+	$db = Db::init();
+	for ($i=0; $i < $num; $i++) { 
+		
+		$tokey = create_password(32);
+		$data = array('tokey' => $tokey, 'status' => 1, 'add_time' => time(), 'dis_time' => time());
+		$res = $db->addRow('cs_tokey', $data);
+		if ($res) {
+			$r += 1;
+		}
+	}
+	return $r;
+}
+
+// 查询用户
+function getUser($id) {
+	$db = Db::init();
+	$data = array('id' => $id);
+	$sql = "SELECT `id`, `name`, `pwd`, `tokey`, `reg_time`, `last_edit_time`, `eyt_type` FROM `cs_user` WHERE `id` = :id AND `status` = 1";
+	$res = $db->getRow($sql, $data);
+	return $res;
+}
+
+// 添加用户
+function addUser($name, $pass, $time, $eyt_type) {
+
+	$tokey_id = mt_rand(1, 1000);
+	$tky = getTokey();
+	$tokey = $tky[$tokey_id]['tokey'];
+	$eyt_type = mt_rand(1, 5);
+	$pass = create_user_password($pass, time(), $tokey, $eyt_type);
+	$data = array('name' => $name, 'pwd' => $pass, 'tokey' => $tokey_id, 'reg_time' => time(), 'last_edit_time' => time(), 'eyt_type' => $eyt_type);
+	$res = $db->addRow('cs_user', $data);
+	
+	return $res;
+}
+
+// 生成Tokey
+function create_password($length) {
+    $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+	$password = '';
+	for ( $i = 0; $i < $length; $i++ ) {
+		// $password .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+		$password .= $chars[ mt_rand(0, strlen($chars) - 1) ];
+	}
+	return $password;
+}
+
+// 生成User密码
+function create_user_password ($password, $time, $tokey, $type){
+	if ($type == 1) {
+		$tk = substr($tokey, 6,10);
+		$pass = md5(sha1($password.$time.$tk));
+	} elseif ($type == 2) {
+		$tk = substr($tokey, 16,8);
+		$pass = md5(sha1($time.$password.$tk));
+	} elseif ($type == 3) {
+		$tk = substr($tokey, 5,9);
+		$pass = md5(sha1($password.$tk.$time));
+	} elseif ($type == 4) {
+		$tk = substr($tokey, 9,7);
+		$pass = md5(sha1($password.$time.$tk));
+	} elseif ($type == 5) {
+		$tk = substr($tokey, 20,6);
+		$pass = md5(sha1($tk.$password.$time));
+	} else {
+		die('加密类型不存在');
+	}
+	return $pass;
+}

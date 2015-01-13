@@ -5,7 +5,7 @@
         
     <div class="row">
         <div class="col-md-12 center login-header">
-            <h2>Welcome to Charisma</h2>
+            <h2>Welcome to BabYuan</h2>
         </div>
         <!--/span-->
     </div><!--/row-->
@@ -15,30 +15,28 @@
             <div class="alert alert-info">
                 Please login with your Username and Password.
             </div>
-            <form class="form-horizontal" action="index.html" method="post">
-                <fieldset>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
-                        <input type="text" class="form-control" placeholder="Username" id="username">
-                    </div>
-                    <div class="clearfix"></div><br>
+            <fieldset>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+                    <input type="text" class="form-control" placeholder="Username" id="username">
+                </div>
+                <div class="clearfix"></div><br>
 
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                        <input type="password" class="form-control" placeholder="Password" id="password">
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                    <input type="password" class="form-control" placeholder="Password" id="password">
+                </div>
+                <div class="clearfix"></div>
 
-                    <div class="input-prepend">
-                        <label class="remember" for="remember"><input type="checkbox" id="remember"> Remember me</label>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="input-prepend">
+                    <label class="remember" for="remember"><input type="checkbox" id="remember"> Remember me</label>
+                </div>
+                <div class="clearfix"></div>
 
-                    <p class="center col-md-5">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </p>
-                </fieldset>
-            </form>
+                <p class="center col-md-5">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </p>
+            </fieldset>
         </div>
         <!--/span-->
     </div><!--/row-->
@@ -50,8 +48,19 @@
 <script>
 $(function(){
     $(".btn-primary").click(function(){
-        if ($("#username").val() == "" || $("#password").val() == "") {
+        var user = $("#username").val();
+        var pass = $("#password").val();
+        if (user == "" || pass == "") {
             return false;
+        } else {
+            $.post("/login_do.php",{name:user,pwd:pass},
+                function(data) {
+                    if (data.cd == 0) {
+                        location.href="/admin.php"; 
+                    } else {
+                        alert(data.msg);
+                    };
+            },"json");
         };
     });
 });
