@@ -1,5 +1,7 @@
 <?php 
 error_reporting(E_ALL & ~E_NOTICE & ~E_NOTICE);
+// 项目程序目录
+define("APP_PATH", RUNTIME_PATH . "/App");
 // 核心程序目录
 define("CORE_PATH", RUNTIME_PATH . "/Core");
 // 日志存放目录
@@ -24,7 +26,7 @@ $smarty = new Smarty();
 // 是否使用缓存
 $smarty->caching = false;
 // 设置模板目录
-$smarty->template_dir = RUNTIME_PATH . "/Templet"; 
+$smarty->template_dir = APP_PATH . "/Templet"; 
 // 设置编译目录
 $smarty->compile_dir = RUNTIME_PATH . "/Runtime/Templet_c"; 
 // 缓存文件夹

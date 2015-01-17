@@ -90,3 +90,24 @@ function create_user_password ($password, $time, $tokey, $type){
 	}
 	return $pass;
 }
+
+// 检测登陆
+function checkLogin() {
+	if (!isset($_COOKIE['csid']) || empty($_COOKIE['csid']) || !isset($_COOKIE['cstk']) || empty($_COOKIE['cstk'])) {
+		header("location:".WWW."/login");exit;
+	} else {
+		$id = trim(intval($_COOKIE['csid']));
+		$tk = trim($_COOKIE['cstk']);
+		$user = getUser($id);
+		if ($user) {
+			$tokey = md5($user['id'].$user['tokey'].$user['eyt_type']);
+			if ($tk === $tokey) {
+				return true;
+			} else {
+				header("location:".WWW."/login");exit;
+			}
+		} else {
+			header("location:".WWW."/login");exit;
+		}
+	}
+}

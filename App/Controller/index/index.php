@@ -1,5 +1,5 @@
 <?php 
-include("./Core/core.php");
+include("../../../Core/core.php");
 echo 'hello world!';exit;
 
 

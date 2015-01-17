@@ -53,10 +53,10 @@ $(function(){
         if (user == "" || pass == "") {
             return false;
         } else {
-            $.post("/login_do.php",{name:user,pwd:pass},
+            $.post("/login/do_login",{name:user,pwd:pass},
                 function(data) {
                     if (data.cd == 0) {
-                        location.href="/admin.php"; 
+                        location.href="/admin"; 
                     } else {
                         alert(data.msg);
                     };

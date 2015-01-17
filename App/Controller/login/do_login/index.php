@@ -1,5 +1,5 @@
 <?php
-include("./Core/core.php");
+include("../../../../Core/core.php");
 
 $db = Db::init();
 $user = !empty($_POST['name']) ? trim($_POST['name']) : die('用户名不能为空');
