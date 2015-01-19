@@ -1,0 +1,75 @@
+<{include file="Common/header.html"}>
+<body>
+<{include file="Common/header_top.html"}>
+<div class="ch-container">
+    <div class="row">
+        <{include file="Common/left.html"}>
+        <noscript>
+            <div class="alert alert-block col-md-12">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+            </div>
+        </noscript>
+        <div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="/admin/index">管理后台首页</a>
+                    </li>
+                    <li>
+                        <a href="/admin/category/add">添加分类</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="box col-md-12">
+                    <div class="box-inner">
+                        <div class="box-content">
+                            <form role="form">
+
+                                <div class="form-group">
+                                    <label class="control-label" for="selectError">1.分类所属:</label>
+                                    <div class="controls">
+                                        <select id="selectError" data-rel="chosen">
+                                            <option value="0">顶级分类</option>
+                                            <option>图片</option>
+                                            <option>--写真</option>
+                                            <option>--照片</option>
+                                            <option>文章</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="selectError">2.分类状态:</label>
+                                    <div class="controls">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="status" value="1" checked="checked"> 开启
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="inlineRadioOptions" id="status" value="0"> 关闭
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">3.分类名称</label>
+                                    <input type="text" class="form-control" id="name" name="name" >
+                                </div>
+                                <button type="submit" class="btn btn-default">提交</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+
+            </div><!--/row-->
+        <!-- content ends -->
+        </div><!--/#content.col-md-0-->
+    </div><!--/fluid-row-->
+ 
+    <{include file="Common/footer_bottom.html"}>
+</div><!--/.fluid-container-->
+<{include file="Common/footer.html"}>

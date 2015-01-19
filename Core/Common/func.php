@@ -34,6 +34,18 @@ function addTokey($num) {
 	return $r;
 }
 
+// 添加类型
+function addType($name) {
+	$db = Db::init();
+	$data = array('name' => $name, 'status' => 1, 'add_time' => time());
+	$res = $db->addRow('cs_type', $data);
+	if ($res) {
+		$info += 1;
+	}
+
+	return $info;
+}
+
 // 查询用户
 function getUser($id) {
 	$db = Db::init();
@@ -104,10 +116,32 @@ function checkLogin() {
 			if ($tk === $tokey) {
 				return true;
 			} else {
-				header("location:".WWW."/login");exit;
+				header("location:".WWW."/admin/login");exit;
 			}
 		} else {
-			header("location:".WWW."/login");exit;
+			header("location:".WWW."/admin/login");exit;
 		}
 	}
+}
+
+// 获取分类
+function getCategory($pid){
+	$db = Db::init();
+	$data = array('pid' => $pid);
+	$sql = "SELECT `id`, `name`, `pid`, `status`, `add_time`, `last_edit_time` FROM `cs_category` WHERE `pid` = :pid AND `status` = 1";
+	$res = $db->getAll($sql, $data);
+	return $res;
+}
+
+// 获取文章
+function getArticle($id) {
+	$db = Db::init();
+	if ($id == 0) {
+		$data = array();
+		$sql = "";
+	} else {
+		$data = array('id' => $id);
+		$sql = "";
+	}
+	
 }

@@ -1,4 +1,4 @@
-<{include file="header.html"}>
+<{include file="Common/header.html"}>
 <body>
 <div class="ch-container">
     <div class="row">
@@ -53,7 +53,7 @@ $(function(){
         if (user == "" || pass == "") {
             return false;
         } else {
-            $.post("/login/do_login",{name:user,pwd:pass},
+            $.post("/admin/login/do_login",{name:user,pwd:pass},
                 function(data) {
                     if (data.cd == 0) {
                         location.href="/admin"; 
@@ -65,4 +65,4 @@ $(function(){
     });
 });
 </script>
-<{include file="footer.html"}>
+<{include file="Common/footer.html"}>

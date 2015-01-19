@@ -1,6 +1,5 @@
 <?php 
 include("../../../Core/core.php");
 
-
 checkLogin();
-$smarty->display("admin.html");
+$smarty->display("Admin/index.html");
