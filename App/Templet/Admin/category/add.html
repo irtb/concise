@@ -26,40 +26,33 @@
                 <div class="box col-md-12">
                     <div class="box-inner">
                         <div class="box-content">
-                            <form role="form">
-
-                                <div class="form-group">
-                                    <label class="control-label" for="selectError">1.分类所属:</label>
-                                    <div class="controls">
-                                        <select id="selectError" data-rel="chosen">
-                                            <option value="0">顶级分类</option>
-                                            <option>图片</option>
-                                            <option>--写真</option>
-                                            <option>--照片</option>
-                                            <option>文章</option>
-                                        </select>
-                                    </div>
+                            <div class="form-group">
+                                <label class="control-label" for="selectError">1.分类所属:</label>
+                                <div class="controls">
+                                    <select id="pid" data-rel="chosen">
+                                        <option value="0">顶级分类</option>
+                                        <{$cat}>
+                                    </select>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label" for="selectError">2.分类状态:</label>
-                                    <div class="controls">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="inlineRadioOptions" id="status" value="1" checked="checked"> 开启
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="inlineRadioOptions" id="status" value="0"> 关闭
-                                        </label>
-                                    </div>
+                            <div class="form-group">
+                                <label class="control-label" for="selectError">2.分类状态:</label>
+                                <div class="controls">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="status" value="1" checked="checked"> 开启
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="inlineRadioOptions" id="status" value="0"> 关闭
+                                    </label>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">3.分类名称</label>
-                                    <input type="text" class="form-control" id="name" name="name" >
-                                </div>
-                                <button type="submit" class="btn btn-default">提交</button>
-                            </form>
-
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">3.分类名称</label>
+                                <input type="text" class="form-control" id="name" name="name" >
+                            </div>
+                            <button type="submit" class="btn btn-default" id="sub">提交</button>
                         </div>
                     </div>
                 </div>
@@ -72,4 +65,26 @@
  
     <{include file="Common/footer_bottom.html"}>
 </div><!--/.fluid-container-->
+<script>
+$(function(){
+    $("#sub").click(function(){
+        var pid = $("#pid").val();
+        var status = $("#status").val();
+        var name = $("#name").val();
+        if (pid == "" || status == "" || name == "") {
+            return false;
+        } else {
+            $.post("/admin/category/add_do",{pid:pid,status:status,name:name},
+                function(data) {
+                    console.log(data);
+                    if (data.cd == 0) {
+                        location.href="/admin"; 
+                    } else {
+                        alert(data.msg);
+                    };
+            },"json");
+        };
+    });
+});
+</script>
 <{include file="Common/footer.html"}>
