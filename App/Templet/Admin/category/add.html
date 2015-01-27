@@ -29,10 +29,8 @@
                             <div class="form-group">
                                 <label class="control-label" for="selectError">1.分类所属:</label>
                                 <div class="controls">
-                                    <select id="chzn-select" data-rel="chosen">
-                                        <option value="0">顶级分类</option>
-                                        <option value="1">文章</option>
-                                        <option value="2">图片</option>
+                                    <select id="pid">
+                                        <option level="1" value="0">顶级分类</option>
                                         <{$cat}>
                                     </select>
                                 </div>
@@ -70,23 +68,19 @@
 <script>
 $(function(){
     $("#sub").click(function(){
-        var selectObj = $("#slectplat");
-        selectObj.parent().children().remove('div');
-        selectObj.removeClass();
-        $("#slectplat").val(_plat);
-        selectObj.addClass("#chzn-select");
-        selectObj.chosen();
         var pid = $("#pid").val();
+        var level = $("#pid").find("option:selected").attr("level");
         var status = $("#status").val();
         var name = $("#name").val();
         if (pid == "" || status == "" || name == "") {
             return false;
         } else {
-            $.post("/admin/category/add/add_do",{pid:pid,status:status,name:name},
+            $.post("/admin/category/add/add_do",{pid:pid,level:level,status:status,name:name},
                 function(data) {
                     console.log(data);
-                    if (data.cd == 0) {
-                        location.href="/admin"; 
+                    if (data.cd == 1) {
+                        alert(data.msg);
+                        location.href="/admin/category"; 
                     } else {
                         alert(data.msg);
                     };

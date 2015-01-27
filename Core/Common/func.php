@@ -141,9 +141,23 @@ function getArticle($id) {
 function getCategory(){
 	$db = Db::init();
 	$data = array();
-	$sql = "SELECT `id`, `name`, `pid`, `status`, `add_time`, `last_edit_time` FROM `cs_category` ORDER BY `id` DESC";
+	$sql = "SELECT `id`, `name`, `pid`, `status`, `add_time`, `last_edit_time` FROM `cs_category` ORDER BY `id` ASC";
 	$res = $db->getAll($sql, $data);
 	return $res;
+}
+
+// 获取某个分类的所有子分类
+function getSubs($catId=0, $level=1){
+	$categorys = getCategory();
+	$subs=array();
+	foreach($categorys as $item) {
+		if($item['pid'] == $catId) {
+			$item['level'] = $level;
+			$subs[] = $item;
+			$subs=array_merge($subs, getSubs($item['id'], $level+1));
+		}
+	}
+	return $subs;
 }
 
 // function tree(&$list, $pid = 0, $level = 0, $html='--'){
@@ -172,19 +186,7 @@ function getSons($catId = 0){
 	return $sons;
 }
 
-// 获取某个分类的所有子分类
-function getSubs($catId=0, $level=1){
-	$categorys = getCategory();
-	$subs=array();
-	foreach($categorys as $item) {
-		if($item['pid'] == $catId) {
-			$item['level'] = $level;
-			$subs[] = $item;
-			$subs=array_merge($subs, getSubs($categorys, $item['id'], $level+1));
-		}
-	}
-	return $subs;
-}
+
 
 // 获取某个分类的所有父分类
 // 方法一，递归
