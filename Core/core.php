@@ -10,7 +10,7 @@ function classAutoLoader($class){
     }
 }
 spl_autoload_register('classAutoLoader');
-new Router();
+// new Router();
 require_once(CORE_PATH."/Conf/define.php");
 require_once(CORE_PATH."/Common/func.php");
  
