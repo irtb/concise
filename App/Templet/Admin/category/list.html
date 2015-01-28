@@ -29,6 +29,7 @@
                 <tr>
                     <th>ID</th>
                     <th>分类名称</th>
+                    <th>分类级别</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -38,6 +39,7 @@
                 <tr>
                     <td><{$v.id}></td>
                     <td class="center"><{$v.name}></td>
+                    <td class="center"><{$v.level}></td>
                     <td class="center">
                         <{if $v.status eq 1}>
                         <span class="label-success label label-default">开启</span>
@@ -46,15 +48,11 @@
                         <{/if}>
                     </td>
                     <td class="center">
-                        <a class="btn btn-success btn-sm" href="#">
-                            <i class="glyphicon glyphicon-zoom-in icon-white"></i>
-                            预览
-                        </a>
-                        <a class="btn btn-info btn-sm" href="#">
+                        <a class="btn btn-info btn-sm" href="/admin/category/edit?id=<{$v.id}>">
                             <i class="glyphicon glyphicon-edit icon-white"></i>
                             编辑
                         </a>
-                        <a class="btn btn-danger btn-sm" href="#">
+                        <a class="btn btn-danger btn-sm" href="/admin/category/delete?id=<{$v.id}>">
                             <i class="glyphicon glyphicon-trash icon-white"></i>
                             删除
                         </a>

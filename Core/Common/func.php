@@ -10,6 +10,44 @@ function dump($data) {
 	echo '</pre>';
 }
 
+/**
+ * 获取和设置配置参数 支持批量定义[来源于ThinkPHP]
+ * @param string|array $name 配置变量
+ * @param mixed $value 配置值
+ * @param mixed $default 默认值
+ * @return mixed
+ */
+function C($name=null, $value=null, $default=null) {
+    static $_config = array();
+    // 无参数时获取所有
+    if (empty($name)) {
+        return $_config;
+    }
+    // 优先执行设置获取或赋值
+    if (is_string($name)) {
+        if (!strpos($name, '.')) {
+            $name = strtoupper($name);
+            if (is_null($value))
+                return isset($_config[$name]) ? $_config[$name] : $default;
+            $_config[$name] = $value;
+            return;
+        }
+        // 二维数组设置和获取支持
+        $name = explode('.', $name);
+        $name[0]   =  strtoupper($name[0]);
+        if (is_null($value))
+            return isset($_config[$name[0]][$name[1]]) ? $_config[$name[0]][$name[1]] : $default;
+        $_config[$name[0]][$name[1]] = $value;
+        return;
+    }
+    // 批量设置
+    if (is_array($name)){
+        $_config = array_merge($_config, array_change_key_case($name,CASE_UPPER));
+        return;
+    }
+    return null; // 避免非法参数
+}
+
 // 加密Tokey
 function getTokey() {
 	$db = Db::init();
@@ -141,7 +179,7 @@ function getArticle($id) {
 function getCategory(){
 	$db = Db::init();
 	$data = array();
-	$sql = "SELECT `id`, `name`, `pid`, `status`, `add_time`, `last_edit_time` FROM `cs_category` ORDER BY `id` ASC";
+	$sql = "SELECT `id`, `name`, `pid`, `level`, `status`, `add_time`, `last_edit_time` FROM `cs_category` ORDER BY `id` ASC";
 	$res = $db->getAll($sql, $data);
 	return $res;
 }
