@@ -1,0 +1,5 @@
+name: 19880327
+version: 1
+handle:
+- directoryindex: index.php
+- rewrite: if(!is_dir() && !is_file() && path ~ "^(.*)$" ) goto "/index.php"
